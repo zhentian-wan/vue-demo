@@ -3,7 +3,7 @@
     <section class="container">
         <item-description></item-description>
         <h1 class="title">
-            {{message}}
+            {{message | capitalize}}
         </h1>
         <button @click="changeMessage" class="button">Change Message</button>
         <hr>
@@ -19,6 +19,7 @@
                        v-model="firstName"
                        @keyup.enter="submit"
                        @keyup.alt.ctrl.shift.down="keyeventHandler"/>
+                <button v-bind:disabled="buttonDisabled">{{buttonText}}</button>
             </form>
             <div>
                 {{key}}
@@ -42,15 +43,33 @@
   export default {
     data() {
       return {
-        message: 'This is my vue!',
+        message: 'this is my vue!',
         counter: 0,
         key: "",
-        firstName: ""
+        firstName: "",
+        buttonText: "Add"
       }
     },
 
+      computed: {
+        buttonDisabled: function() {
+          return this.firstName == "";
+        }
+      },
+      watch: {
+        firstName: function(){
+          this.buttonText = this.firstName !== "" ? "Add " + this.firstName : "Add Dinosaur";
+        }
+      },
+
     components: {
         ItemDescription
+    },
+
+    filters: {
+        capitalize(value) {
+            return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+        }
     },
 
     methods: {
