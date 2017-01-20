@@ -1,5 +1,7 @@
 <template>
+
     <section class="container">
+        <item-description></item-description>
         <h1 class="title">
             {{message}}
         </h1>
@@ -34,6 +36,9 @@
 </style>
 
 <script>
+
+  import ItemDescription from '../components/item-description';
+
   export default {
     data() {
       return {
@@ -42,6 +47,10 @@
         key: "",
         firstName: ""
       }
+    },
+
+    components: {
+        ItemDescription
     },
 
     methods: {
