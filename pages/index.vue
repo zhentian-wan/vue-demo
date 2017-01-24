@@ -10,6 +10,12 @@
         <section>
             <h2>Mouse event</h2>
             <div>{{counter}}</div>
+            <template v-if="counter > 5">
+                <div>Show if the counter is greater than five</div>
+            </template>
+            <div v-else>Show the counter is smaller than five</div>
+            <button @click="dec" v-show="counter > 0">-</button>
+            <button @click="inc" v-show="counter < 5">+</button>
             <div @mouseover="inc">Mouse over here to change counter</div>
         </section>
         <section>
@@ -79,6 +85,10 @@
 
       inc() {
         this.counter += 1;
+      },
+
+      dec() {
+        this.counter -= 1;
       },
 
       keyeventHandler() {
