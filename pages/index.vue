@@ -1,7 +1,12 @@
 <template>
 
     <section class="container">
-        <item-description></item-description>
+        <item-description
+            v-bind:counter = "counter"
+            v-bind:name = "message"
+            @total="getTotalFromChild"
+        ></item-description>
+        <span>Get total: {{total}}</span>
         <h1 class="title">
             {{message | capitalize}}
         </h1>
@@ -53,7 +58,8 @@
         counter: 0,
         key: "",
         firstName: "",
-        buttonText: "Add"
+        buttonText: "Add",
+        total: 0
       }
     },
 
@@ -79,6 +85,9 @@
     },
 
     methods: {
+      getTotalFromChild(val) {
+         this.total = val;
+      },
       changeMessage() {
         this.message = "Updated message here!"
       },
