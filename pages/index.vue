@@ -36,6 +36,18 @@
                 {{key}}
             </div>
         </section>
+        <section>
+            <h3>Dynamic component</h3>
+            <a @click="toggle">{{toggleButton}}</a>
+            <keep-alive>
+                <component
+                        v-bind:is="currentView"
+                        v-bind:name="message"
+                >
+                </component>
+            </keep-alive>
+
+        </section>
     </section>
 </template>
 
@@ -50,6 +62,8 @@
 <script>
 
   import ItemDescription from '../components/item-description';
+  import ShowComponent from '../components/show';
+  import EditComponent from '../components/edit';
 
   export default {
     data() {
@@ -59,13 +73,19 @@
         key: "",
         firstName: "",
         buttonText: "Add",
-        total: 0
+        total: 0,
+        currentView: "ShowComponent"
       }
     },
 
       computed: {
         buttonDisabled: function() {
           return this.firstName == "";
+        },
+
+        toggleButton: function() {
+            return this.currentView === "ShowComponent" ?
+                'show': 'Edit';
         }
       },
       watch: {
@@ -75,7 +95,9 @@
       },
 
     components: {
-        ItemDescription
+        ItemDescription,
+        EditComponent,
+        ShowComponent
     },
 
     filters: {
@@ -85,6 +107,11 @@
     },
 
     methods: {
+      toggle() {
+        this.currentView =
+            this.currentView === "ShowComponent" ?
+            "EditComponent" : "ShowComponent";
+      },
       getTotalFromChild(val) {
          this.total = val;
       },
